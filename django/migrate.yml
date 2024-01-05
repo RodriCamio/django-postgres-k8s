@@ -2,11 +2,13 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: django-postgre-migrations
+  namespace: argocd
 spec:
   template:
     spec:
       containers:
       - name: django-job-container
+      
         # image: django-postgresql
         image: smriti111/django-postgres
         # imagePullPolicy: IfNotPresent

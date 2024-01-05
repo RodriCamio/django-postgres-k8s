@@ -6,6 +6,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: postgres-pvc
+  namespace: argocd
   # labels:
   #   type: local
 spec:
@@ -79,6 +80,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: postgres-cluster-ip-service
+  namespace: argocd
 spec:
   type: ClusterIP
   selector:

@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-service
+  namespace: argocd
 spec:
   rules:
   - host: django.postgres.com
@@ -10,7 +11,7 @@ spec:
         ################
         # URL ROUTING #
         ################
-        - path: /django
+        - path: /
           pathType: Prefix
           backend:
             service:
