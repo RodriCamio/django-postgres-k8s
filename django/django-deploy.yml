@@ -1,18 +1,28 @@
-apiVersion: batch/v1
-kind: Job
+###########################
+# Deployment
+###########################
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: django-postgre-migrations
-  namespace: argocd
+  name: django-postgre-deploy
+  labels:
+    app: django-postgre
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-postgre
   template:
+    metadata:
+      labels:
+        app: django-postgre
     spec:
       containers:
-      - name: django-job-container
-      
-        # image: django-postgresql
-        image: smriti111/django-postgres
-        # imagePullPolicy: IfNotPresent
-        command: ["python","./manage.py", "migrate"]
+      - name: django
+        image: rodricamio/crud-django-postgres:6
+        command: ["python","./manage.py", "runserver", "0.0.0.0:8010"]
+        ports:
+        - containerPort: 8000
         env:
         - name: POSTGRES_USER
           valueFrom:
@@ -34,5 +44,3 @@ spec:
             configMapKeyRef:
               name: app-variables
               key: DB_HOST
-
-      restartPolicy: Never
